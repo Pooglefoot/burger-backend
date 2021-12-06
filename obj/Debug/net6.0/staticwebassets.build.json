@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "clFtmbjLbAcDUpLvKgoYa1ui7+QgMXRXyD6rRxv0YN8=",
+  "Source": "BurgerBackend",
+  "BasePath": "_content/BurgerBackend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
