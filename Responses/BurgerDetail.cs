@@ -2,7 +2,7 @@ using BurgerBackend.Models;
 
 namespace BurgerBackend.Responses;
 
-// Data Transfer Object for Burger Model Objects
+// Data Transfer Object for displaying Burger Model Objects
 public class BurgerDetail {
     public Guid Id {get; set;}
     public string Name {get; set;}

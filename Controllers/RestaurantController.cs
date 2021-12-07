@@ -13,12 +13,14 @@ public class RestaurantController : ControllerBase {
     // Queries service for all restaurants
     [HttpGet]
     public ActionResult<List<RestaurantSummary>> getAllRestaurants() {
+        // Select returns the more generic type IEnumerable.
         var enumRestaurants = RestaurantService.GetAll().Select(r => new RestaurantSummary(r));
         
         if (enumRestaurants == null) {
             return NotFound();
         }
 
+        // As the rest of the system is working with lists, we must convert IEnumerable variable to List.
         List<RestaurantSummary> restaurants = enumRestaurants.ToList();
 
         return restaurants;
@@ -78,6 +80,7 @@ public class RestaurantController : ControllerBase {
 
         RestaurantService.Delete(id);
 
+        // If item has been successfully deleted, return 204.
         return NoContent();
     }
 }

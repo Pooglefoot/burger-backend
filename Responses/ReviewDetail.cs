@@ -2,6 +2,7 @@ using BurgerBackend.Models;
 
 namespace BurgerBackend.Responses;
 
+// Data Transfer Object for displaying Review Model objects
 public class ReviewDetail {
     public string Title {get; set;}
     public string? Description {get; set;}

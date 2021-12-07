@@ -2,6 +2,7 @@ using BurgerBackend.Models;
 
 namespace BurgerBackend.Responses;
 
+// Data Transfer Object for displaying Restaurant Model objects
 public class RestaurantSummary {
     public Guid Id {get; set;}
     public string name {get; set;}

@@ -2,6 +2,7 @@ using BurgerBackend.Models;
 
 namespace BurgerBackend.Responses;
 
+// Data Transfer Object for creating Review Model objects
 public class CreateReviewRequest {
         public string Title {get; set;} = string.Empty;
         public string? Description {get; set;}

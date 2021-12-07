@@ -2,7 +2,7 @@ using BurgerBackend.Models;
 
 namespace BurgerBackend.Services;
 
-// Service class to act as a data store for burgers, to have some data upon building the project.
+// Service class to act as a data store for Reviews, to have some data upon building the project.
 public static class ReviewService {
     static List<Review> Reviews {get;}
     static ReviewService() {
