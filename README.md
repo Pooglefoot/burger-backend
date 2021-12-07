@@ -9,6 +9,7 @@ Used in testing:
 
 
 REST Structure:
+
     GET    /burgers --> list of all burgers
     POST   /burgers --> add a new burger
     GET    /burgers/{id} --> detail on a specific burger
@@ -29,6 +30,7 @@ REST Structure:
 
 
 Test Examples:
+    
     Post Restaurant example:
         post -c "{"name": "The Sour House", "address": "Friar Street 301A", "openingtimes": "10:00-19:00"}"
 
