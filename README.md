@@ -6,6 +6,8 @@ Minimum requirement to run:
 Used in testing:
     HttpRepl (HTTP Read-Eval-Print Loop)
 
+
+
 REST Structure:
     GET    /burgers --> list of all burgers
     POST   /burgers --> add a new burger
@@ -24,3 +26,17 @@ REST Structure:
     GET    /reviews/{id} --> detail on a specific review
     PUT    /reviews/{id} --> update the review's details
     DELETE /review/{id} --> remove that review
+
+
+Test Examples:
+    Post Restaurant example:
+        post -c "{"name": "The Sour House", "address": "Friar Street 301A", "openingtimes": "10:00-19:00"}"
+
+    put Restaurant example:
+        put [UUID] -c "{"name": "The Flour House", "address": "Friar Street 301A", "openingtimes": "10:00-19:00"}"
+
+    Post Burger with ID of Restaurant example:
+        post -c "{"name": "Onion-tended Consequences", "ingredients": "Bun, veggie beef, onion rings, lettuce, tomato, BBQ sauce and homemade burger dressing", "vegetarian": true, "restaurantid": "[UUID]"}"
+    
+    Post Review with ID of Burger example:
+	    post -c "{"title": "Onion Goodness", "description": "I really like onions!", "tastescore": 8, "burgerid": "[UUID]"}"
