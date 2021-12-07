@@ -2,17 +2,19 @@ using BurgerBackend.Models;
 
 namespace BurgerBackend.Responses;
 
-class BurgerDetail {
-    private string Name { get; set; }
-    private string Ingredients { get; set; }
-    private bool? Vegetarian { get; set; }
-    private RestaurantDetail Restaurant { get; set; }
-    private List<ReviewDetail> Reviews { get; set; }
+// Data Transfer Object for Burger Model Objects
+public class BurgerDetail {
+    public Guid Id {get; set;}
+    public string Name {get; set;}
+    public string Ingredients {get; set;}
+    public bool Vegetarian {get; set;}
+    public RestaurantSummary Restaurant {get; set;}
 
-    public BurgerDetail (Burger burger, Restaurant restaurant) {
+    public BurgerDetail (Burger burger) {
+        this.Id = burger.Id;
         this.Name = burger.Name;
         this.Ingredients = burger.Ingredients;
         this.Vegetarian = burger.Vegetarian;
-        this.Restaurant = new RestaurantDetail(restaurant);
+        this.Restaurant = new RestaurantSummary(burger.Restaurant);
     }
 }

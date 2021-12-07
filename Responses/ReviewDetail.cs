@@ -3,12 +3,12 @@ using BurgerBackend.Models;
 namespace BurgerBackend.Responses;
 
 public class ReviewDetail {
-    private string Title { get; set; }
-    private string? Description { get; set; }
-    private int TasteScore { get; set; }
-    private int? TextureScore { get; set; }
-    private int? VisualScore { get; set; }
-    private BurgerDetail Burger { get; set; }
+    public string Title {get; set;}
+    public string? Description {get; set;}
+    public int TasteScore {get; set;}
+    public int? TextureScore {get; set;}
+    public int? VisualScore {get; set;}
+    public BurgerDetail Burger {get; set;}
 
     public ReviewDetail (Review review) {
         this.Title = review.Title;
@@ -16,5 +16,6 @@ public class ReviewDetail {
         this.TasteScore = review.TasteScore;
         this.TextureScore = review.TextureScore;
         this.VisualScore = review.VisualScore;
+        this.Burger = new BurgerDetail(review.Burger);
     }
 }

@@ -1,66 +1,82 @@
 using BurgerBackend.Models;
 using BurgerBackend.Services;
+using BurgerBackend.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BurgerBackend.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class BurgerController : ControllerBase {
-    public BurgerController() {}
+public class RestaurantController : ControllerBase {
+    public RestaurantController() {}
 
-    // Queries service for all burgers
+    // Queries service for all restaurants
     [HttpGet]
-    public ActionResult<List<Burger>> GetAll() {
-        return BurgerService.GetAll();
+    public ActionResult<List<RestaurantSummary>> getAllRestaurants() {
+        var enumRestaurants = RestaurantService.GetAll().Select(r => new RestaurantSummary(r));
+        
+        if (enumRestaurants == null) {
+            return NotFound();
+        }
+
+        List<RestaurantSummary> restaurants = enumRestaurants.ToList();
+
+        return restaurants;
     }
 
-    // Queries service for specific burger
+    // Queries service for specific restaurant
     [HttpGet("{id}")]
-    public ActionResult<Burger> Get(int id) {
-        var burger = BurgerService.Get(id);
+    public ActionResult<RestaurantSummary> getRestaurant(Guid id) {
+        var restaurant = RestaurantService.Get(id);
 
-        if (burger == null) {
+        // If restaurant not found, return error 404.
+        if (restaurant == null) {
             return NotFound();
         }
 
-        return burger;
+        return new RestaurantSummary(restaurant);
     }
 
-    // Adds (creates) a burger object in the data store.
+    // Adds (creates) a restaurant object in the data store.
     [HttpPost]
-    public IActionResult Create(Burger burger) {
-        BurgerService.Add(burger);
-        return CreatedAtAction(nameof(Create), new { id = burger.Id }, burger);
+    public IActionResult createRestaurant(CreateRestaurantRequest form) {
+
+        // Sends Data to service which creates and returns a new Restaurant Model Object, and tells us what id it has.
+        Restaurant newRestaurant = RestaurantService.Add(form.Name, form.Address, form.OpeningTimes);
+        return CreatedAtAction(nameof(createRestaurant), new { id = newRestaurant.Id }, newRestaurant);
     }
 
-    // Updates a Burger in the data store.
+    // Updates a restaurant in the data store.
     [HttpPut("{id}")]
-    public IActionResult Update(int id, Burger burger) {
-        if (id != burger.Id) {
-            return BadRequest();
-        }
+    public IActionResult Update(Guid id, UpdateRestaurantRequest form) {
+        var restaurant = RestaurantService.Get(id);
 
-        var existingBurger = BurgerService.Get(id);
-        if (existingBurger is null) {
+        if (restaurant == null) {
             return NotFound();
         }
 
-        BurgerService.Update(burger);
+        restaurant = RestaurantService.Update(restaurant, form.Name, form.Address, form.OpeningTimes);
 
+        // If, after attempting to update, there is no restaurant object, return error 404.
+        // Means that the restaurant was not found in the data. Should not happen.
+        if (restaurant == null) {
+            return NotFound();
+        }
+
+        // If everything has been successfully processed, return 204.
         return NoContent();
     }
 
-    // Deletes a burger from the data store.
+    // Deletes a restaurant from the data store.
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id) {
-        var burger = BurgerService.Get(id);
+    public IActionResult Delete(Guid id) {
+        var restaurant = RestaurantService.Get(id);
 
-        if (burger is null) {
+        if (restaurant == null) {
             return NotFound();
         }
 
-        BurgerService.Delete(id);
+        RestaurantService.Delete(id);
 
         return NoContent();
     }

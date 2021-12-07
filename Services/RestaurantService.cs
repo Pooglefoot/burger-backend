@@ -4,12 +4,19 @@ namespace BurgerBackend.Services;
 
 // Service class to act as a data store for burgers, to have some data upon building the project.
 public static class RestaurantService {
-    static List<Restaurant> Restaurants { get; }
-    static int nextId = 3;
+    static List<Restaurant> Restaurants {get;}
     static RestaurantService() {
         Restaurants = new List<Restaurant> {
-            new Restaurant { Id = 1, Name = "Hamburger", Ingredients = "Bun, beef, pickles, onions, ketchup and mustard", Vegetarian = false, Restaurant = "Generic Gary's"},
-            new Restaurant { Id = 2, Name = "Cheeseburger", Ingredients = "Bun, beef, cheddar cheese, pickles, onions, ketchup and mustard", Vegetarian = false, Restaurant = "Generic Gary's"}
+            new Restaurant (
+                "Bob's Burgers",
+                "Bridger Street 32",
+                "15:00 - 22:30"
+            ),
+            new Restaurant (
+                "Generic Gary's",
+                "Stutter Bridge 23",
+                "12:30 - 21:00"
+            )
         };
     }
 
@@ -17,30 +24,41 @@ public static class RestaurantService {
         return Restaurants;
     }
 
-    public static Restaurant? Get(int id) {
+    public static Restaurant? Get(Guid id) {
         return Restaurants.FirstOrDefault(p => p.Id == id);
     }
 
-    public static void Add(Restaurant restaurant) {
-        restaurant.Id = nextId++;
-        Restaurant.Add(restaurant);
+    public static Restaurant Add(string name, string address, string openingTimes) {
+        Restaurant restaurant = new Restaurant (
+            name,
+            address,
+            openingTimes
+        );
+
+        Restaurants.Add(restaurant);
+        return restaurant;
     }
 
-    public static void Delete(int id) {
+    public static void Delete(Guid id) {
         var restaurant = Get(id);
-        if (restaurant is null) {
+        if (restaurant == null) {
             return;
         }
 
-        Restaurant.Remove(restaurant);
+        Restaurants.Remove(restaurant);
     }
 
-    public static void Update(Restaurant restaurant) {
-        var index = Restaurant.FindIndex(p => p.Id == restaurant.Id);
+    public static Restaurant? Update(Restaurant existingRestaurant, string name, string address, string openingTimes) {
+        var index = Restaurants.FindIndex(p => p.Id == existingRestaurant.Id);
         if (index == -1) {
-            return;
+            return null;
         }
 
-        Burgers[index] = restaurant;
+        existingRestaurant.Name = name;
+        existingRestaurant.Address = address;
+        existingRestaurant.OpeningTimes = openingTimes;
+
+        Restaurants[index] = existingRestaurant;
+        return existingRestaurant;
     }
 }
